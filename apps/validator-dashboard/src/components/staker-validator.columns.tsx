@@ -4,12 +4,13 @@ import { ColumnDef } from "@tanstack/react-table"
 import { formatEther } from "viem"
 
 import { TableType } from "@/lib/types"
-import { formatDate } from "@/lib/utils"
+import { formatDate, truncateKey } from "@/lib/utils"
 
 export const stakerValidatorColumns: ColumnDef<TableType.StakerValidator>[] = [
   {
     accessorKey: "validatorBLSKey",
     header: "Validator BLS Key",
+    cell: ({ row }) => truncateKey(row.original.validatorBLSKey),
   },
   {
     accessorKey: "stakeAmount",

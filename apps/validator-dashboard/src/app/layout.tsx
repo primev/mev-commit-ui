@@ -3,6 +3,7 @@ import "@/styles/globals.css"
 import { ReactNode } from "react"
 import type { Metadata, Viewport } from "next"
 import { Fira_Code } from "next/font/google"
+import { Toaster } from "sonner"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -75,6 +76,15 @@ export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
         )}
       >
         <Providers>{children}</Providers>
+        <Toaster
+          closeButton
+          visibleToasts={1}
+          richColors
+          toastOptions={{
+            className: "pointer-events-auto",
+          }}
+          theme="dark"
+        />
       </body>
     </html>
   )

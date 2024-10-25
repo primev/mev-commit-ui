@@ -2,13 +2,13 @@ import type { OnboardAPI } from "@web3-onboard/core"
 import injectedModule from "@web3-onboard/injected-wallets"
 import { init } from "@web3-onboard/react"
 import wagmi from "@web3-onboard/wagmi"
-import { holesky } from "viem/chains"
+import { anvil, holesky } from "viem/chains"
 
-const anvilTestnet = {
-  id: 31337,
-  token: "AVI",
-  label: "Anvil Testnet",
-  rpcUrl: `http://localhost:8545`,
+const anvilChain = {
+  id: anvil.id,
+  token: anvil.nativeCurrency.symbol,
+  label: anvil.name,
+  rpcUrl: anvil.rpcUrls.default.http[0],
 }
 
 const holeskyChain = {
@@ -28,7 +28,7 @@ export const getOnboard = (): OnboardAPI => {
     web3Onboard = init({
       wagmi,
       wallets,
-      chains: [holeskyChain],
+      chains: [holeskyChain, anvilChain],
       appMetadata: {
         name: "mev-commit validatory registry",
         icon: primevIcon,

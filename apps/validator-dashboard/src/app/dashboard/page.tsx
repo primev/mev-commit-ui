@@ -10,12 +10,11 @@ export default function Dashboard(): JSX.Element {
   return (
     <main className=" sm:grid-cols-[200px_1fr] xl:grid-cols-[270px_1fr]">
       <Account />
-      <div>
+      <div className="mx-auto flex w-3/4 flex-col gap-4">
         <Suspense fallback={<div>Loading...</div>}>
           <StakerValidatorTable columns={stakerValidatorColumns} />
         </Suspense>
-      </div>
-      <div>
+
         <Suspense fallback={<div>Loading...</div>}>
           <PodsTable columns={podsColumns} />
         </Suspense>

@@ -47,9 +47,11 @@ export function useEigenPods(
 ) {
   const [pageCount, setPageCount] = useState(0)
 
+  const id = restakerId ? restakerId.toLowerCase() : ""
+
   const { data, loading, error, fetchMore } = useQuery(EIGEN_PODS_QUERY, {
     variables: {
-      id: restakerId || "",
+      id,
       first: pagination.pageSize,
       skip: pagination.pageIndex * pagination.pageSize,
       orderBy: EigenPod_OrderBy.Id,
@@ -72,7 +74,7 @@ export function useEigenPods(
   const handlePaginationChange = (newPagination: PaginationState) => {
     fetchMore({
       variables: {
-        id: restakerId,
+        id,
         skip: newPagination.pageIndex * newPagination.pageSize,
         first: newPagination.pageSize,
       },

@@ -4,6 +4,7 @@ import React from "react"
 import { Control } from "react-hook-form"
 
 import { OptInFormData } from "./opt-in.form"
+import { DynamicInput } from "./ui/dynamic-input"
 import {
   FormControl,
   FormField,
@@ -31,13 +32,7 @@ export function StakeAmountField({
             Stake Amount (in wei)
           </FormLabel>
           <FormControl>
-            <Input
-              type="number"
-              id="stakeAmount"
-              placeholder="Enter amount in wei"
-              {...field}
-              className="mt-2"
-            />
+            <DynamicInput {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

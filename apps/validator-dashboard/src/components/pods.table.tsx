@@ -57,7 +57,7 @@ export default function PodsTable({
         podOwner: pod.podOwner,
         podContractAddress: pod.podContractAddress,
         isDelegated: true,
-        operatorId: pod.operatorId,
+        // operatorId: pod.operatorId,
       }))
     )
 

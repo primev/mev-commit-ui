@@ -44,9 +44,11 @@ export function useStakerValidators(
 ) {
   const [pageCount, setPageCount] = useState(0)
 
+  const id = stakerId ? stakerId.toLowerCase() : ""
+
   const { data, loading, error, fetchMore } = useQuery(STAKER_QUERY, {
     variables: {
-      id: stakerId || "",
+      id,
       first: pagination.pageSize,
       skip: pagination.pageIndex * pagination.pageSize,
       orderBy: StakerValidator_OrderBy.StakedAt,
@@ -70,7 +72,7 @@ export function useStakerValidators(
   const handlePaginationChange = (newPagination: PaginationState) => {
     fetchMore({
       variables: {
-        id: stakerId,
+        id,
         skip: newPagination.pageIndex * newPagination.pageSize,
         first: newPagination.pageSize,
       },

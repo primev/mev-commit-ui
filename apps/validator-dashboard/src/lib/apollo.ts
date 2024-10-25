@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client"
 
 const client = new ApolloClient({
-  uri: "https://api.goldsky.com/api/public/project_cm1jo0v0u5zrv01vghcrm1ka1/subgraphs/mev-commit-validators/pr-1/gn",
+  uri: "https://api.goldsky.com/api/public/project_cm1jo0v0u5zrv01vghcrm1ka1/subgraphs/mev-commit-validators/pr-2/gn",
   cache: new InMemoryCache({
     typePolicies: {
       Query: {

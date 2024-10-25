@@ -10,7 +10,7 @@ export default function OptInPage(): JSX.Element {
           Opt-in to the MEV Commit network and start earning rewards.
         </p>
       </div>
-      <div className="">
+      <div>
         <FormStepProvider>
           <OptInForm />
         </FormStepProvider>

@@ -60,7 +60,7 @@ export function PaginatedTable<TData, TValue>({
   })
 
   return (
-    <div className="rounded-md border">
+    <div className="bg-blur-sm rounded-md border bg-black/70">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
