@@ -49,12 +49,13 @@ export default function Home(): React.ReactElement {
             <div className="text-sm text-muted-foreground">Holesky Testnet</div>
           </div>
         </div>
-        <div className="flex w-full flex-col items-center gap-2 ">
+        <div className="flex w-full flex-col items-center gap-6 ">
           <div className="w-4/5 sm:my-6 sm:w-full">
             <MevCommitMetrics />
           </div>
-          <ConnectWallet />
-          <div className="flex w-2/3 flex-col gap-2 text-xs sm:text-sm">
+
+          <div className="flex w-2/3 flex-col gap-12 text-xs sm:text-sm">
+            <ConnectWallet />
             <div>
               connect wallet and stake to passively opt-in to mev-commit
             </div>
