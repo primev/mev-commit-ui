@@ -1,5 +1,5 @@
 {
-  "name": "turborepo-shadcn-ui",
+  "name": "mev-commit-ui",
   "version": "1.4.2",
   "private": true,
   "license": "MIT",
@@ -18,6 +18,6 @@
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }
