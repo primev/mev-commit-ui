@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { BookText, Home, Lock, LogOut } from "lucide-react"
 import { FaFaucetDrip } from "react-icons/fa6"
 
+import { useWallet } from "@/hooks/use-wallet"
 import {
   Sidebar,
   SidebarContent,
@@ -66,6 +67,8 @@ const externalItems = [
 
 export function AppSidebar(): React.ReactElement {
   const pathname = usePathname()
+  const { disconnect } = useWallet()
+
   return (
     <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader className="px-1 py-2">
@@ -124,7 +127,7 @@ export function AppSidebar(): React.ReactElement {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton variant="outline">
+            <SidebarMenuButton variant="outline" onClick={disconnect}>
               <LogOut />
               <span>Disconnect</span>
             </SidebarMenuButton>

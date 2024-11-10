@@ -142,8 +142,8 @@ const icons = {
           y2="59.5857"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#0F7C76" />
-          <stop offset="1" stop-color="#2FE4AB" />
+          <stop stopColor="#0F7C76" />
+          <stop offset="1" stopColor="#2FE4AB" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_2193_5"
@@ -153,8 +153,8 @@ const icons = {
           y2="24.2363"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#0F7C76" />
-          <stop offset="1" stop-color="#2FE4AB" />
+          <stop stopColor="#0F7C76" />
+          <stop offset="1" stopColor="#2FE4AB" />
         </linearGradient>
       </defs>
     </svg>

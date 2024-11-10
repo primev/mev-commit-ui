@@ -1,6 +1,7 @@
 "use client"
 
 import React, { createContext, useEffect, useMemo, useReducer } from "react"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import {
   Address,
@@ -26,6 +27,7 @@ export interface WalletState {
   walletClient: WalletClient | null
   isConnecting: boolean
   connectWallet: (lastConnectedWallet?: string) => Promise<void>
+  disconnect: () => Promise<void>
   dispatch: React.Dispatch<{ type: string; payload: any }>
   isConnected: boolean
 }
@@ -37,9 +39,12 @@ const initialState: WalletState = {
   walletClient: null,
   isConnecting: false,
   connectWallet: async () => {},
+  disconnect: async () => {},
   dispatch: (() => {}) as React.Dispatch<{ type: string; payload: any }>, // Properly typed dispatch function
   isConnected: false,
 }
+
+const LOCAL_STORAGE_KEY_LAST_WALLET = "mev-commit:lastConnectedWallet"
 
 const SET_ADDRESS = "SET_ADDRESS"
 const SET_BLOCK_NUMBER = "SET_BLOCK_NUMBER"
@@ -47,10 +52,12 @@ const SET_BALANCE = "SET_BALANCE"
 const SET_WALLET_CLIENT = "SET_WALLET_CLIENT"
 const SET_IS_CONNECTING = "SET_IS_CONNECTING"
 const SET_IS_CONNECTED = "SET_IS_CONNECTED"
+const RESET_STATE = "RESET_STATE"
+const SET_DISCONNECTED = "SET_DISCONNECTED"
 
 const reducer = (
   state: WalletState,
-  action: { type: string; payload: any }
+  action: { type: string; payload?: any }
 ) => {
   switch (action.type) {
     case SET_ADDRESS:
@@ -65,6 +72,11 @@ const reducer = (
       return { ...state, isConnecting: action.payload }
     case SET_IS_CONNECTED:
       return { ...state, isConnected: action.payload }
+    case RESET_STATE:
+      return initialState
+    case SET_DISCONNECTED:
+      window.localStorage.removeItem(LOCAL_STORAGE_KEY_LAST_WALLET)
+      return initialState
     default:
       return state
   }
@@ -123,6 +135,8 @@ const configureChain = async (walletClient: WalletClient): Promise<boolean> => {
 export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const web3Onboard = getOnboard()
+  const router = useRouter()
+  // @TODO: Use useStorage hook to store last connected wallet
 
   const connectWallet = async (lastConnectedWallet?: string) => {
     dispatch({ type: SET_IS_CONNECTING, payload: true })
@@ -151,10 +165,11 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
 
         if (!lastConnectedWallet) {
           window.localStorage.setItem(
-            "mev-commit:lastConnectedWallet",
+            LOCAL_STORAGE_KEY_LAST_WALLET,
             wallet?.label ?? ""
           )
         }
+        router.push("/dashboard")
       }
     } catch (error) {
       console.error("Error connecting wallet:", error)
@@ -163,9 +178,22 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
     }
   }
 
+  const disconnect = async () => {
+    clearState()
+
+    if (web3Onboard) {
+      const [primaryWallet] = web3Onboard.state.get().wallets
+      await web3Onboard.disconnectWallet({ label: primaryWallet?.label ?? "" })
+      dispatch({ type: SET_DISCONNECTED })
+      router.push("/")
+    }
+  }
+
+  const clearState = () => {}
+
   useEffect(() => {
     const lastConnectedWallet = window.localStorage.getItem(
-      "mev-commit:lastConnectedWallet"
+      LOCAL_STORAGE_KEY_LAST_WALLET
     )
 
     if (lastConnectedWallet) {
@@ -197,9 +225,10 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
     () => ({
       ...state,
       connectWallet,
+      disconnect,
       dispatch,
     }),
-    [state, connectWallet]
+    [state, connectWallet, disconnect]
   )
 
   return (
