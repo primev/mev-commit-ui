@@ -1,7 +1,13 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client"
 
+const testSymbiotic =
+  "https://api.goldsky.com/api/public/project_cm1jo0v0u5zrv01vghcrm1ka1/subgraphs/mev-commit-validators/test-symbiotic-v6/gn"
+
+const prod =
+  "https://api.goldsky.com/api/public/project_cm1jo0v0u5zrv01vghcrm1ka1/subgraphs/mev-commit-validators/test-symbiotic-v6-full/gn"
+
 const client = new ApolloClient({
-  uri: "https://api.goldsky.com/api/public/project_cm1jo0v0u5zrv01vghcrm1ka1/subgraphs/mev-commit-validators/pr-2/gn",
+  uri: prod,
   cache: new InMemoryCache({
     typePolicies: {
       Query: {

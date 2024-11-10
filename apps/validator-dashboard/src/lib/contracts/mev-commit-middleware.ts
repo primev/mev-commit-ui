@@ -28,7 +28,6 @@ export const registerValidators = async ({
   vaults: Address[]
   account: Address
 }) => {
-  console.log("registerValidators- walletClient.account", walletClient.account)
   const { request } = await client.simulateContract({
     address: MEV_COMMIT_MIDDLEWARE_ADDRESS,
     abi: mevCommitMiddlewareAbi,

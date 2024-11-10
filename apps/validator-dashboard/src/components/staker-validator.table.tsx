@@ -4,7 +4,7 @@ import { useState } from "react"
 import { ColumnDef, PaginationState, SortingState } from "@tanstack/react-table"
 
 import { TableType } from "@/lib/types"
-import { useStakerValidators } from "@/hooks/use-staker-validators"
+import { useStakerValidatorsPaginated } from "@/hooks/use-staker-validators"
 import { useAddress } from "@/hooks/use-wallet"
 
 import { PaginatedTable } from "./ui/data-table.paginated"
@@ -16,8 +16,6 @@ export interface StakerValidatorDataTableProps {
 export default function StakerValidatorTable({
   columns,
 }: StakerValidatorDataTableProps): React.ReactNode {
-  const address = useAddress()
-
   const [sorting, setSorting] = useState<SortingState>([])
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -31,10 +29,15 @@ export default function StakerValidatorTable({
     loading,
     error,
     handlePaginationChange,
-  } = useStakerValidators(address, pagination, sorting)
+  } = useStakerValidatorsPaginated(pagination, sorting)
 
   if (error) return <p>Error: {error.message}</p>
-  if (!staker && !loading) return <p>No staker found with ID: {address}</p>
+  // if (!staker && !loading)
+  //   return (
+  //     <div className="flex min-h-96 flex-col items-center justify-center rounded-lg bg-white/10 bg-gradient-to-bl from-gray-900 via-purple-900/10 to-violet-800/10 p-4 shadow-lg backdrop-blur-sm">
+  //       <p>No staker found with ID: {address}</p>
+  //     </div>
+  //   )
 
   return (
     <PaginatedTable

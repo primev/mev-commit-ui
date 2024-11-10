@@ -1,10 +1,29 @@
-import {
-  OrderDirection,
-  StakerValidator_OrderBy,
-} from "@/__generated__/graphql"
+import { gql } from "@apollo/client"
 
-import { gql } from "../__generated__/gql"
 import client from "./apollo"
+
+export const getMevCommitMetrics = async (): Promise<{
+  totalStaked: bigint
+  totalOptedIn: bigint
+  totalRestaked: bigint
+}> => {
+  const GET_MEV_COMMIT_METRICS = gql(`
+    query GetMevCommitMetrics {
+      mevCommitValidators(id: "mevCommitValidators") {
+        totalStaked
+        totalOptedIn
+        totalRestaked
+      }
+    }
+  `)
+  const { data } = await client.query({ query: GET_MEV_COMMIT_METRICS })
+
+  return {
+    totalStaked: BigInt(data.mevCommitValidators.totalStaked),
+    totalOptedIn: BigInt(data.mevCommitValidators.totalOptedIn),
+    totalRestaked: BigInt(data.mevCommitValidators.totalRestaked),
+  }
+}
 
 // const STAKER_QUERY = gql(/* GraphQL */ `
 //   query GetStaker(

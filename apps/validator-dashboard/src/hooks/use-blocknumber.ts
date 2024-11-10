@@ -20,7 +20,6 @@ export const useBlockNumber = () => {
     const unsubscribe = client.watchBlockNumber({
       emitOnBegin: true,
       onBlockNumber: (newBlockNumber: bigint) => {
-        console.log("newBlockNumber", newBlockNumber)
         dispatch({ type: "SET_BLOCK_NUMBER", payload: newBlockNumber })
       },
       onError: (error: Error) => {

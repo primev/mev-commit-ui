@@ -2,10 +2,10 @@ import { FileText, X } from "lucide-react"
 import { UseFormReturn } from "react-hook-form"
 
 import { truncateKey } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
-import { OptInFormData } from "./opt-in.form"
-import { Button } from "./ui/button"
-import { ScrollArea } from "./ui/scroll-area"
+import { OptInFormData } from "../opt-in.form"
 
 interface ValidatorKeysListProps {
   form: UseFormReturn<OptInFormData>
@@ -16,6 +16,7 @@ export function ValidatorKeysList({
   form,
   fileName,
 }: ValidatorKeysListProps): React.ReactElement {
+  const validatorKeys = form.getValues("validatorKeys") ?? []
   return (
     <div className="mx-auto w-full">
       <div className="mb-4 flex items-center justify-between">
@@ -35,17 +36,19 @@ export function ValidatorKeysList({
           </Button>
         </div>
         <span className="text-xs text-muted-foreground">
-          {form.getValues("validatorKeys").length} keys
+          {form.getValues("validatorKeys")[0]?.length} keys
         </span>
       </div>
       <ScrollArea className="h-[200px] w-full rounded-md border border-muted/40 bg-muted/30 p-3">
         <div className="space-y-4">
-          {form.getValues("validatorKeys").map((key, index) => (
+          {validatorKeys.map((key, index) => (
             <div
               key={index}
               className="mx-auto w-min rounded-md bg-muted/70 p-2 shadow-sm shadow-muted"
             >
-              <code className="font-mono text-sm ">{truncateKey(key)}</code>
+              <code className="font-mono text-sm ">
+                {truncateKey(key[0] ?? "")}
+              </code>
             </div>
           ))}
         </div>

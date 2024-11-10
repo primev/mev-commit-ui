@@ -4,8 +4,8 @@ import { useMemo, useState } from "react"
 import { ColumnDef, PaginationState, SortingState } from "@tanstack/react-table"
 
 import { TableType } from "@/lib/types"
-import { useDelegatedEigenPods } from "@/hooks/use-delegated-pods"
-import { useEigenPods } from "@/hooks/use-eigenpods"
+import { useDelegatedEigenPodsPaginated } from "@/hooks/use-delegated-pods"
+import { useEigenPodsPaginated } from "@/hooks/use-eigenpods"
 import { useAddress } from "@/hooks/use-wallet"
 
 import { PaginatedTable } from "./ui/data-table.paginated"
@@ -31,7 +31,7 @@ export default function PodsTable({
     loading: eigenPodsLoading,
     error: eigenPodsError,
     handlePaginationChange: handleEigenPodsPaginationChange,
-  } = useEigenPods(address, pagination, sorting)
+  } = useEigenPodsPaginated(pagination, sorting)
 
   const {
     delegatedEigenPods,
@@ -39,7 +39,7 @@ export default function PodsTable({
     loading: delegatedLoading,
     error: delegatedError,
     handlePaginationChange: handleDelegatedPaginationChange,
-  } = useDelegatedEigenPods(address, pagination, sorting)
+  } = useDelegatedEigenPodsPaginated(pagination, sorting)
 
   const flattenedValidators = useMemo(() => {
     const regularValidators = eigenPods.flatMap((pod) =>
@@ -74,8 +74,8 @@ export default function PodsTable({
   }
 
   if (error) return <p>Error: {error.message}</p>
-  if (!eigenPods.length && !loading)
-    return <p>No EigenPods found for address: {address}</p>
+  // if (!eigenPods.length && !loading)
+  //   return <p>No EigenPods found for address: {address}</p>
 
   return (
     <PaginatedTable

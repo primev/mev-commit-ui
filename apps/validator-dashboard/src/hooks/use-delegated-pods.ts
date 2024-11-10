@@ -6,6 +6,7 @@ import { Address, Hex } from "viem"
 
 import { gql } from "../__generated__/gql"
 import { TableType } from "../lib/types"
+import { useAddress } from "./use-wallet"
 
 const DELEGATED_EIGEN_PODS_QUERY = gql(/* GraphQL */ `
   query GetDelegatedEigenPods(
@@ -44,18 +45,19 @@ const DELEGATED_EIGEN_PODS_QUERY = gql(/* GraphQL */ `
   }
 `)
 
-export function useDelegatedEigenPods(
-  operatorId: Address | null,
+export function useDelegatedEigenPodsPaginated(
   pagination: PaginationState,
   sorting: SortingState
 ) {
+  const address = useAddress()
+  const id = address ? address.toLowerCase() : ""
   const [pageCount, setPageCount] = useState(0)
 
   const { data, loading, error, fetchMore } = useQuery(
     DELEGATED_EIGEN_PODS_QUERY,
     {
       variables: {
-        id: operatorId || "",
+        id,
         first: pagination.pageSize,
         skip: pagination.pageIndex * pagination.pageSize,
         orderBy: EigenPod_OrderBy.Id,
@@ -63,7 +65,7 @@ export function useDelegatedEigenPods(
           ? OrderDirection.Desc
           : OrderDirection.Asc,
       },
-      skip: !operatorId,
+      skip: !id,
       notifyOnNetworkStatusChange: true,
     }
   )
@@ -79,7 +81,7 @@ export function useDelegatedEigenPods(
   const handlePaginationChange = (newPagination: PaginationState) => {
     fetchMore({
       variables: {
-        id: operatorId,
+        id,
         skip: newPagination.pageIndex * newPagination.pageSize,
         first: newPagination.pageSize,
       },
@@ -123,5 +125,69 @@ export function useDelegatedEigenPods(
     loading,
     error,
     handlePaginationChange,
+  }
+}
+
+const DELEGATED_EIGEN_PODS_NON_PAGINATED_QUERY = gql(/* GraphQL */ `
+  query GetDelegatedEigenPodsNonPaginated($id: ID!) {
+    operator(id: $id) {
+      id
+      status
+      delegatedPods {
+        id
+        podOwner
+        podContractAddress
+        operator {
+          id
+        }
+        restaker {
+          validators {
+            id
+            validatorBLSKey
+            stakeAmount
+            stakedAt
+            status
+          }
+        }
+      }
+    }
+  }
+`)
+
+export function useDelegatedEigenPods() {
+  const operatorId = useAddress()
+  const id = operatorId ? operatorId.toLowerCase() : ""
+
+  const { data, loading, error } = useQuery(
+    DELEGATED_EIGEN_PODS_NON_PAGINATED_QUERY,
+    {
+      variables: {
+        id,
+      },
+      skip: !operatorId,
+    }
+  )
+
+  // Format the data to match TableType.DelegatedEigenPod
+  const formattedDelegatedEigenPods: TableType.EigenPod[] =
+    data?.operator?.delegatedPods?.map((pod) => ({
+      id: pod.id,
+      podOwner: pod.podOwner as Address,
+      podContractAddress: pod.podContractAddress as Address,
+      operatorId: pod.operator?.id as Address,
+      validators: pod.restaker.validators.map((validator) => ({
+        id: validator.id,
+        validatorBLSKey: validator.validatorBLSKey as Hex,
+        stakeAmount: BigInt(validator.stakeAmount),
+        stakedAt: BigInt(validator.stakedAt),
+        status: validator.status as TableType.RestakerStatus,
+      })),
+    })) || []
+
+  return {
+    operator: data?.operator,
+    delegatedEigenPods: formattedDelegatedEigenPods,
+    loading,
+    error,
   }
 }

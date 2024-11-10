@@ -7,6 +7,7 @@ export type IconKeys =
   | "sun"
   | "moon"
   | "primev"
+  | "primevIcon"
   | "eth"
   | "obol"
   | "eigenlayer"
@@ -77,7 +78,7 @@ const icons = {
       width="100%"
       height="100%"
       viewBox="0 0 98 95"
-      stroke="currentColor"
+      stroke="none"
       fill="none"
       {...props}
     >

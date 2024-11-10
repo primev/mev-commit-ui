@@ -6,6 +6,7 @@ export namespace TableType {
     validatorBLSKey: Hex
     stakeAmount: bigint
     stakedAt: bigint
+    status: StakerStatus | RestakerStatus | SymbioticStatus
   }
   export interface StakerValidator extends Validator {
     status: StakerStatus
@@ -17,7 +18,7 @@ export namespace TableType {
   }
   export type RestakerStatus =
     | "Registered"
-    | "DeRegistered"
+    | "Deregistered"
     | "DeregisteredRequested"
 
   export interface EigenPod {
@@ -30,4 +31,19 @@ export namespace TableType {
     podOwner: Address
     podContractAddress: Address
   }
+  export interface SymbioticValidator {
+    id: string
+    validatorBLSKey: Hex
+    created: bigint
+    vaultAddress: Address
+    position: bigint
+    status: SymbioticStatus
+  }
+  export type SymbioticStatus = "Registered" | "Deregistered"
+}
+
+export type Vault = {
+  id: Address
+  vaultAddress: Address
+  created: bigint
 }

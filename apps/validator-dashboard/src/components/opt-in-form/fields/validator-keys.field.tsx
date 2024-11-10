@@ -1,21 +1,21 @@
 import React, { useEffect, useRef } from "react"
 import { Control, useController } from "react-hook-form"
 
-import { OptInFormData } from "./opt-in.form"
-import { Button } from "./ui/button"
+import { Button } from "@/components/ui/button"
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "./ui/context-menu"
+} from "@/components/ui/context-menu"
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-} from "./ui/form"
+} from "@/components/ui/form"
+
+import { OptInFormData } from "../opt-in.form"
 
 interface ValidatorKeysFieldProps {
   control: Control<OptInFormData>
@@ -52,9 +52,7 @@ export function ValidatorKeysField({ control }: ValidatorKeysFieldProps) {
       const reader = new FileReader()
       reader.onload = (e) => {
         const text = e.target?.result as string
-        console.log("text", text)
         const keys = processKeys(text)
-        console.log("keys", keys)
         field.onChange(keys)
       }
       reader.readAsText(file)

@@ -21,8 +21,10 @@ import {
 } from "@/components/ui/table"
 
 import { DataTablePagination } from "./data-table.pagination-ctrl"
+import { Skeleton } from "./skeleton"
 
 interface PaginatedTableProps<TData, TValue> {
+  error?: Error
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   pageCount: number
@@ -34,6 +36,7 @@ interface PaginatedTableProps<TData, TValue> {
 }
 
 export function PaginatedTable<TData, TValue>({
+  error,
   columns,
   data,
   pageCount,
@@ -59,14 +62,18 @@ export function PaginatedTable<TData, TValue>({
     manualPagination: true,
   })
 
+  if (error) {
+    return <p></p>
+  }
+
   return (
-    <div className="bg-blur-sm rounded-md border bg-black/70">
+    <div className="relative overflow-hidden rounded-lg bg-gray-950/70 shadow-xl backdrop-blur-lg">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow key={headerGroup.id} className="border-b border-white/10">
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
+                <TableHead className="p-5" key={header.id}>
                   {header.isPlaceholder
                     ? null
                     : (flexRender(
@@ -79,14 +86,28 @@ export function PaginatedTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
+          {loading ? (
+            // Render skeleton rows when loading
+            Array.from({ length: 3 }).map((_, index) => (
+              <TableRow key={index}>
+                {columns.map((column, columnIndex) => (
+                  <TableCell
+                    key={`${columnIndex}-${index}`}
+                    className="text-center"
+                  >
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row, index) => (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
+                  <TableCell key={cell.id} className="pl-5">
                     {
                       flexRender(
                         cell.column.columnDef.cell,
@@ -106,7 +127,9 @@ export function PaginatedTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <DataTablePagination table={table} />
+      <div className="px-5 pb-5">
+        <DataTablePagination table={table} />
+      </div>
     </div>
   )
 }

@@ -139,7 +139,6 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
           chain: CHAIN,
           transport: custom(wallet.provider),
         })
-        console.log("walletClient chainId", await walletClient.getChainId())
         const [address] = await walletClient.getAddresses()
         if (address) {
           dispatch({ type: SET_ADDRESS, payload: address })

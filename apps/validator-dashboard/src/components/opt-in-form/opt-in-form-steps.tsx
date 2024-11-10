@@ -4,13 +4,16 @@ import { CircleSlash, Info, Loader, Loader2, Terminal } from "lucide-react"
 import { UseFormReturn } from "react-hook-form"
 
 import { cn } from "@/lib/utils"
+import { useAccount } from "@/hooks/use-account"
 import { useFormStep } from "@/hooks/use-form-step"
 
-import { IconKeys, IconSelector } from "./icons"
+import { IconKeys, IconSelector } from "../icons"
+import { FormStep } from "../providers/form-step-provider"
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert"
+import { Badge } from "../ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { OptInFormData } from "./opt-in.form"
-import { FormStep } from "./providers/form-step-provider"
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import { RegisterStatCard } from "./ui/register-stat-card"
 
 const ValidatorKeysBody = ({
   form,
@@ -35,38 +38,59 @@ const RegisterBody = ({ form }: { form: UseFormReturn<OptInFormData> }) => {
   return (
     <div className="w-full">
       <div className="grid grid-cols-2 gap-4">
-        <div className="relative flex flex-col gap-2  overflow-hidden rounded-md bg-black/30 p-4 backdrop-blur-sm before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-br before:from-blue-500/20 before:via-purple-500/20 before:to-pink-500/20 before:opacity-80">
-          {/* <IconSelector
-            icon={protocol as IconKeys}
-            className="h-12 w-12 fill-muted-foreground"
-          /> */}
-          <h3 className="text-sm font-medium text-muted-foreground">
-            Protocol
-          </h3>
-          <p className="text-xl uppercase text-white">
-            {protocol || "Not selected"}
-          </p>
-        </div>
-
-        <div className="relative flex flex-col gap-2  overflow-hidden rounded-md bg-black/30 p-4 backdrop-blur-sm before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-br before:from-blue-500/20 before:via-purple-500/20 before:to-pink-500/20 before:opacity-80">
-          {/* <IconSelector
-            icon={protocol as IconKeys}
-            className="h-12 w-12 fill-muted-foreground"
-          /> */}
-          <h3 className="text-sm font-medium text-muted-foreground">
-            Validators
-          </h3>
-          <p className="text-xl uppercase text-white">
-            {keys ? keys.length : 0}
-          </p>
-        </div>
+        <RegisterStatCard title="Protocol" value={protocol || "Not selected"} />
+        {protocol === "symbiotic" && (
+          <>
+            <RegisterStatCard
+              title="Vaults"
+              value={form.watch("vaults").length}
+            />
+            <RegisterStatCard
+              title="Validators"
+              value={
+                keys
+                  ? keys.reduce(
+                      (total, currentArray) => total + currentArray.length,
+                      0
+                    )
+                  : 0
+              }
+            />
+          </>
+        )}
+        {protocol !== "symbiotic" && (
+          <RegisterStatCard
+            title="Validators"
+            value={keys ? keys[0]?.length : 0}
+          />
+        )}
+        {stakeAmount && (
+          <>
+            <RegisterStatCard title="Stake Amount">
+              <p className="text-xl font-medium uppercase text-white">
+                <span className="mr-0.5 font-medium text-muted-foreground">
+                  ~
+                </span>
+                {Number(stakeAmount).toFixed(2)}
+                <span className="ml-1 text-xs font-medium text-muted-foreground">
+                  ETH
+                </span>
+              </p>
+            </RegisterStatCard>
+            <RegisterStatCard title="Per Key">
+              <p className="text-xl font-medium uppercase text-white">
+                <span className="mr-0.5 font-medium text-muted-foreground">
+                  ~
+                </span>
+                {stakeAmount && (Number(stakeAmount) / keys.length).toFixed(2)}
+                <span className="ml-1 text-xs font-medium text-muted-foreground">
+                  ETH
+                </span>
+              </p>
+            </RegisterStatCard>
+          </>
+        )}
       </div>
-
-      {stakeAmount && (
-        <p className="text-sm text-muted-foreground">
-          <strong>Stake Amount:</strong> {stakeAmount}
-        </p>
-      )}
     </div>
   )
 }
@@ -81,6 +105,7 @@ const protocolDescriptions: Record<string, string> = {
 }
 
 const ProtocolBody = ({ form }: { form: UseFormReturn<OptInFormData> }) => {
+  const { isPodOwner, isEigenPodOperator } = useAccount()
   const protocol = form.watch("protocol")
 
   const icon = {
@@ -91,7 +116,7 @@ const ProtocolBody = ({ form }: { form: UseFormReturn<OptInFormData> }) => {
 
   const iconClassName = {
     vanilla: " fill-muted-foreground",
-    eigenlayer: "w-48 fill-muted-foreground",
+    eigenlayer: "w-48",
     symbiotic: "w-48",
   }[protocol]
 
@@ -105,7 +130,26 @@ const ProtocolBody = ({ form }: { form: UseFormReturn<OptInFormData> }) => {
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.25 }} // Adjust the duration as needed
         >
-          <Card className="border-none">
+          <Card className="relative overflow-hidden border-0 border-none bg-gray-950 shadow-xl">
+            {/* <div className="absolute inset-0 after:absolute after:right-1/3 after:top-2/3 after:h-32 after:w-32 after:translate-x-1/2 after:translate-y-1/2 after:rounded-full after:bg-[#B5FF3D] after:blur-[74px]  after:content-['']" /> */}
+            <div className="absolute inset-0">
+              <div
+                className={cn(
+                  "absolute left-1/4 top-1/4 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full  blur-3xl",
+                  protocol === "vanilla" && "bg-[#0F7C76]/30",
+                  protocol === "eigenlayer" && "bg-[#260db9]/40",
+                  protocol === "symbiotic" && "bg-[#B5FF3D]/20"
+                )}
+              />
+              <div
+                className={cn(
+                  "absolute bottom-1/4 right-1/4 h-32 w-32 translate-x-1/2 translate-y-1/2 rounded-full bg-[#34014d]/50 blur-3xl",
+                  protocol === "vanilla" && "bg-[#0F7C76]/50",
+                  protocol === "eigenlayer" && "bg-[#0c6d4a]/50",
+                  protocol === "symbiotic" && "bg-[#34014d]/50"
+                )}
+              />
+            </div>
             <CardHeader className="space-y-3">
               <IconSelector
                 icon={icon}
@@ -113,8 +157,8 @@ const ProtocolBody = ({ form }: { form: UseFormReturn<OptInFormData> }) => {
               />
               <CardTitle className="text-sm capitalize">{protocol}</CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
+            <CardContent className="relative">
+              <p className="rounded-lg bg-gray-900/50 p-4 text-sm text-white backdrop-blur-sm">
                 {protocolDescriptions[protocol]}
               </p>
             </CardContent>
@@ -125,10 +169,23 @@ const ProtocolBody = ({ form }: { form: UseFormReturn<OptInFormData> }) => {
   )
 }
 
+const ImportVaultKeysBody = ({
+  form,
+}: {
+  form: UseFormReturn<OptInFormData>
+}) => (
+  <Alert className="w-10/12">
+    <Info className="h-4 w-4" />
+    <AlertDescription className="text-xs text-muted-foreground">
+      Please enter your vault keys in the specified format.
+    </AlertDescription>
+  </Alert>
+)
+
 const steps: Record<
   FormStep,
   {
-    value: "protocol" | "stakeAmount" | "validatorKeys" | "register"
+    value: "protocol" | "stakeAmount" | "validatorKeys" | "register" | "vaults"
     label: string
     description: string
     body?: (form: UseFormReturn<OptInFormData>) => ReactNode // Function to return a ReactNode
@@ -140,22 +197,34 @@ const steps: Record<
     description: "Select the protocol you want to opt-in with.",
     body: (form) => <ProtocolBody form={form} />,
   },
+  [FormStep.ImportKeys]: {
+    value: "validatorKeys",
+    label: "Validator Keys",
+    description: "Enter a list of validator keys you wish to opt-in with.",
+    body: (form) => <ValidatorKeysBody form={form} />,
+  },
+  [FormStep.ImportVaultKeys]: {
+    value: "validatorKeys",
+    label: "Add Validator Keys",
+    description: "Add validator keys associated with your vaults.",
+    body: (form) => <ImportVaultKeysBody form={form} />,
+  },
+  [FormStep.ImportVaults]: {
+    value: "vaults",
+    label: "Vaults",
+    description: "Select the vaults you want to opt-in with.",
+    body: (form) => <ImportVaultKeysBody form={form} />,
+  },
   [FormStep.InputStake]: {
     value: "stakeAmount",
     label: "Stake Amount",
     description: "Enter the amount you want to stake.",
   },
-  [FormStep.ImportKeys]: {
-    value: "validatorKeys",
-    label: "Validator Keys",
-    description: "Enter a list of validator keys you wish to opt-in with.",
-    body: (form) => <ValidatorKeysBody form={form} />, // Use the separate component
-  },
   [FormStep.Register]: {
     value: "register",
     label: "Register",
     description: "Register your validator keys.",
-    body: (form) => <RegisterBody form={form} />, // Use the new RegisterBody component
+    body: (form) => <RegisterBody form={form} />,
   },
 }
 

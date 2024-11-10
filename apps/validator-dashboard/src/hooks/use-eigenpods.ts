@@ -6,6 +6,7 @@ import { Address, getAddress, Hex } from "viem"
 
 import { gql } from "../__generated__/gql"
 import { TableType } from "../lib/types"
+import { useAddress } from "./use-wallet"
 
 const EIGEN_PODS_QUERY = gql(/* GraphQL */ `
   query GetEigenPods(
@@ -40,14 +41,13 @@ const EIGEN_PODS_QUERY = gql(/* GraphQL */ `
   }
 `)
 
-export function useEigenPods(
-  restakerId: Address | null,
+export function useEigenPodsPaginated(
   pagination: PaginationState,
   sorting: SortingState
 ) {
   const [pageCount, setPageCount] = useState(0)
-
-  const id = restakerId ? restakerId.toLowerCase() : ""
+  const address = useAddress()
+  const id = address ? address.toLowerCase() : ""
 
   const { data, loading, error, fetchMore } = useQuery(EIGEN_PODS_QUERY, {
     variables: {
@@ -59,7 +59,7 @@ export function useEigenPods(
         ? OrderDirection.Desc
         : OrderDirection.Asc,
     },
-    skip: !restakerId,
+    skip: !address,
     notifyOnNetworkStatusChange: true,
   })
 
@@ -117,5 +117,61 @@ export function useEigenPods(
     loading,
     error,
     handlePaginationChange,
+  }
+}
+
+const EIGEN_PODS_NON_PAGINATED_QUERY = gql(/* GraphQL */ `
+  query GetEigenPodsNonPaginated($id: ID!) {
+    restaker(id: $id) {
+      id
+      eigenPods {
+        id
+        podOwner
+        podContractAddress
+        restaker {
+          validators {
+            id
+            validatorBLSKey
+            stakeAmount
+            stakedAt
+            status
+          }
+        }
+      }
+    }
+  }
+`)
+
+export function useEigenPods() {
+  const stakerId = useAddress()
+  const id = stakerId ? stakerId.toLowerCase() : ""
+
+  const { data, loading, error } = useQuery(EIGEN_PODS_NON_PAGINATED_QUERY, {
+    variables: {
+      id,
+    },
+    skip: !stakerId,
+  })
+
+  // Format the data to match TableType.EigenPod
+  const formattedEigenPods: TableType.EigenPod[] =
+    data?.restaker?.eigenPods?.map((pod) => ({
+      id: pod.id,
+      podOwner: getAddress(pod.podOwner),
+      podContractAddress: getAddress(pod.podContractAddress),
+      validators: pod.restaker.validators.map((validator) => ({
+        id: validator.id,
+        validatorBLSKey: validator.validatorBLSKey as Hex,
+        stakeAmount: BigInt(validator.stakeAmount),
+        stakedAt: BigInt(validator.stakedAt),
+        status: validator.status as TableType.RestakerStatus,
+      })),
+    })) || []
+
+  return {
+    restaker: data?.restaker,
+    eigenPods: formattedEigenPods,
+    loading,
+    error,
   }
 }

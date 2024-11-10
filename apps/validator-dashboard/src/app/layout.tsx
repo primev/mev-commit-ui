@@ -71,7 +71,7 @@ export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
       <head />
       <body
         className={cn(
-          "min-h-screen overflow-x-hidden bg-background antialiased",
+          "min-h-screen overflow-x-hidden bg-gray-950 antialiased",
           fira.className
         )}
       >

@@ -1,4 +1,4 @@
-import { Address, WalletClient } from "viem"
+import { Address, parseEther, WalletClient } from "viem"
 
 import { CHAIN } from "../constants"
 import { getPublicClient } from "../viem"
@@ -15,16 +15,19 @@ export const stakeValidators = async ({
   walletClient,
   blsPubkeys,
   account,
+  stakeAmount,
 }: {
   walletClient: WalletClient
   blsPubkeys: Address[]
   account: Address
+  stakeAmount: string
 }) => {
   const { request } = await client.simulateContract({
     address: VANILLA_REGISTRY_ADDRESS,
     abi: vanillaRegistryAbi,
     functionName: "stake",
     args: [blsPubkeys],
+    value: parseEther(stakeAmount),
     account,
   })
 

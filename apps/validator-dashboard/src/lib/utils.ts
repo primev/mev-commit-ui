@@ -18,7 +18,8 @@ export function getContractError(error: any): string | any {
     if (revertError instanceof ContractFunctionRevertedError) {
       return revertError.reason ?? "Unknown error"
     }
-  } else if (error.shortMessage) {
+  }
+  if (error.shortMessage) {
     return error.shortMessage
   } else if (error.message) {
     return error.message
@@ -29,7 +30,7 @@ export function getContractError(error: any): string | any {
 export function truncateKey(
   key: string,
   {
-    prefixLength = 32,
+    prefixLength = 24,
     suffixLength = 24,
   }: { prefixLength?: number; suffixLength?: number } = {}
 ): string {
@@ -41,4 +42,27 @@ export function getErrorName(error: any): string | null {
     return error.cause.data.errorName
   }
   return null
+}
+
+// Utility function to calculate time ago
+export function timeAgo(seconds: number): string {
+  const date = new Date(seconds * 1000)
+  const now = new Date()
+  const secondsAgo = Math.floor((now.getTime() - date.getTime()) / 1000)
+
+  const intervals = [
+    { label: "day", seconds: 86400 },
+    { label: "hour", seconds: 3600 },
+    { label: "minute", seconds: 60 },
+    { label: "second", seconds: 1 },
+  ]
+
+  for (const interval of intervals) {
+    const count = Math.floor(secondsAgo / interval.seconds)
+    if (count > 0) {
+      return `${count} ${interval.label}${count !== 1 ? "s" : ""} ago`
+    }
+  }
+
+  return "just now"
 }
