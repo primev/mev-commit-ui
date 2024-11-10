@@ -19,6 +19,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
   SidebarSeparator,
+  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar"
 
@@ -71,7 +72,8 @@ export function AppSidebar(): React.ReactElement {
 
   return (
     <Sidebar collapsible="icon" variant="floating">
-      <SidebarHeader className="px-1 py-2">
+      <SidebarTrigger className="absolute -right-8 top-2" />
+      <SidebarHeader className="relative px-1 py-2">
         <Link
           href="https://primev.xyz"
           target="_blank"
