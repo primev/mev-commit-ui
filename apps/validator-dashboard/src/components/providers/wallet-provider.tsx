@@ -1,7 +1,7 @@
 "use client"
 
 import React, { createContext, useEffect, useMemo, useReducer } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { toast } from "sonner"
 import {
   Address,
@@ -136,6 +136,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const web3Onboard = getOnboard()
   const router = useRouter()
+  const pathname = usePathname()
   // @TODO: Use useStorage hook to store last connected wallet
 
   const connectWallet = async (lastConnectedWallet?: string) => {
@@ -169,7 +170,9 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
             wallet?.label ?? ""
           )
         }
-        router.push("/dashboard")
+        if (pathname === "/") {
+          router.push("/dashboard")
+        }
       }
     } catch (error) {
       console.error("Error connecting wallet:", error)

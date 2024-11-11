@@ -3,12 +3,13 @@
 import React, { createContext, useCallback, useState } from "react"
 
 export enum FormStep {
-  SelectProtocol = 0,
-  ImportKeys = 1,
-  ImportVaults = 2,
-  ImportVaultKeys = 3,
-  InputStake = 4,
-  Register = 5,
+  Configure = 0,
+  SelectProtocol = 1,
+  ImportKeys = 2,
+  ImportVaults = 3,
+  ImportVaultKeys = 4,
+  InputStake = 5,
+  Register = 6,
 }
 
 export enum Protocol {
@@ -19,17 +20,20 @@ export enum Protocol {
 
 const protocolSteps: { [key in Protocol]: FormStep[] } = {
   [Protocol.EigenLayer]: [
+    FormStep.Configure,
     FormStep.SelectProtocol,
     FormStep.ImportKeys,
     FormStep.Register,
   ],
   [Protocol.Vanilla]: [
+    FormStep.Configure,
     FormStep.SelectProtocol,
     FormStep.ImportKeys,
     FormStep.InputStake,
     FormStep.Register,
   ],
   [Protocol.Symbiotic]: [
+    FormStep.Configure,
     FormStep.SelectProtocol,
     FormStep.ImportVaults,
     FormStep.ImportVaultKeys,
@@ -50,16 +54,17 @@ export const FormStepContext = createContext<FormStepContextType | undefined>(
 )
 
 export function FormStepProvider({ children }: { children: React.ReactNode }) {
-  const [currentStep, setCurrentStep] = useState<FormStep>(
-    FormStep.SelectProtocol
-  )
+  const [currentStep, setCurrentStep] = useState<FormStep>(FormStep.Configure)
   const [selectedProtocol, setSelectedProtocol] = useState<Protocol | null>(
     null
   )
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
 
   const nextStep = useCallback(() => {
-    if (selectedProtocol !== null) {
+    if (currentStep === FormStep.Configure) {
+      // Move to SelectProtocol step
+      setCurrentStep(FormStep.SelectProtocol)
+    } else if (selectedProtocol !== null) {
       const steps = protocolSteps[selectedProtocol]
       if (currentStepIndex < steps.length - 1) {
         const nextIndex = currentStepIndex + 1
@@ -69,10 +74,13 @@ export function FormStepProvider({ children }: { children: React.ReactNode }) {
         }
       }
     }
-  }, [selectedProtocol, currentStepIndex])
+  }, [selectedProtocol, currentStep, currentStepIndex])
 
   const prevStep = useCallback(() => {
-    if (selectedProtocol !== null) {
+    if (currentStep === FormStep.SelectProtocol) {
+      // Move back to Configure step
+      setCurrentStep(FormStep.Configure)
+    } else if (selectedProtocol !== null) {
       const steps = protocolSteps[selectedProtocol]
       if (currentStepIndex > 0) {
         const prevIndex = currentStepIndex - 1
@@ -83,12 +91,13 @@ export function FormStepProvider({ children }: { children: React.ReactNode }) {
         }
       }
     }
-  }, [selectedProtocol, currentStepIndex])
+  }, [selectedProtocol, currentStep, currentStepIndex])
 
   const setProtocol = useCallback((protocol: Protocol) => {
     setSelectedProtocol(protocol)
     setCurrentStepIndex(0)
     setCurrentStep(FormStep.SelectProtocol)
+    console.log("setProtocol", protocol)
   }, [])
 
   return (

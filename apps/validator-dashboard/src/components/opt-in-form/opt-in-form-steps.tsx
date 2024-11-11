@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react"
+import Link from "next/link"
 import { AnimatePresence, motion } from "framer-motion"
 import { CircleSlash, Info, Loader, Loader2, Terminal } from "lucide-react"
 import { UseFormReturn } from "react-hook-form"
@@ -11,7 +12,9 @@ import { IconKeys, IconSelector } from "../icons"
 import { FormStep } from "../providers/form-step-provider"
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert"
 import { Badge } from "../ui/badge"
+import { Button } from "../ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import ConfigureField from "./fields/configure.field"
 import { OptInFormData } from "./opt-in.form"
 import { RegisterStatCard } from "./ui/register-stat-card"
 
@@ -185,12 +188,41 @@ const ImportVaultKeysBody = ({
 const steps: Record<
   FormStep,
   {
-    value: "protocol" | "stakeAmount" | "validatorKeys" | "register" | "vaults"
+    value:
+      | "configured"
+      | "protocol"
+      | "stakeAmount"
+      | "validatorKeys"
+      | "register"
+      | "vaults"
     label: string
     description: string
     body?: (form: UseFormReturn<OptInFormData>) => ReactNode // Function to return a ReactNode
   }
 > = {
+  [FormStep.Configure]: {
+    value: "configured",
+    label: "Configure mev-boost relays",
+    description: "",
+    body: (form) => (
+      <p className="text-sm tracking-tight text-muted-foreground">
+        Before restaking, ensure your mev-boost relays are{" "}
+        <Button
+          variant="linkHover1"
+          size="sm"
+          className="h-full px-0 after:bottom-[0.5rem] after:w-full after:bg-primev/90"
+        >
+          <Link
+            href="https://docs.primev.xyz/v0.6.3/get-started/validators"
+            target="_blank"
+          >
+            configured
+          </Link>
+        </Button>
+        .
+      </p>
+    ),
+  },
   [FormStep.SelectProtocol]: {
     value: "protocol",
     label: "Protocol",

@@ -8,14 +8,13 @@ import type { Address as AddressType, Hex } from "viem"
 import { z } from "zod"
 
 import { useAccount } from "@/hooks/use-account"
-import { useDelegatedEigenPods } from "@/hooks/use-delegated-pods"
-import { useEigenPods } from "@/hooks/use-eigenpods"
 import { useFormStep } from "@/hooks/use-form-step"
 import { useOptInValidators } from "@/hooks/use-opt-in"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 
 import { FormStep, Protocol } from "../providers/form-step-provider"
+import ConfigureField from "./fields/configure.field"
 import { ProtocolField } from "./fields/protocol.field"
 import { StakeAmountField } from "./fields/stake-amount.field"
 import { ValidatorKeysField } from "./fields/validator-keys.field"
@@ -23,8 +22,6 @@ import { VaultKeysField } from "./fields/vault-keys.field"
 import VaultsField from "./fields/vaults.field"
 import { FormSteps } from "./opt-in-form-steps"
 import { ValidatorKeysList } from "./ui/validator-keys-list"
-
-// export type Protocol = "vanilla" | "eigenlayer" | "symbiotic"
 
 const ValidatorKey = z
   .string()
@@ -63,6 +60,7 @@ const Vaults = z
 
 export const formSchema = z
   .object({
+    configured: z.boolean(),
     protocol: z.enum(["vanilla", "eigenlayer", "symbiotic"], {
       required_error: "Protocol is required",
     }),
@@ -89,6 +87,7 @@ function OptInForm() {
   const form = useForm<OptInFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      configured: false,
       protocol: undefined,
       validatorKeys: [[]],
       stakeAmount: undefined,
@@ -105,6 +104,7 @@ function OptInForm() {
 
   const isCurrentStepValid = () => {
     const stepFields: Array<Array<keyof OptInFormData>> = [
+      ["configured"], // FormStep.Configure
       ["protocol"], // FormStep.SelectProtocol
       ["validatorKeys"], // FormStep.ImportKeys
       ["vaults"], // FormStep.ImportVaults
@@ -137,7 +137,14 @@ function OptInForm() {
       protocol !== "eigenlayer" ||
       (currentStep === FormStep.SelectProtocol &&
         (isPodOwner || isEigenPodOperator))
-
+    console.log({
+      stepValid:
+        isStepDirty && !isStepInvalid && isSymbioticValid && isEigenLayerValid,
+      isStepDirty,
+      isStepInvalid: !isStepInvalid,
+      isSymbioticValid: isSymbioticValid,
+      isEigenLayerValid: isEigenLayerValid,
+    })
     return (
       isStepDirty && !isStepInvalid && isSymbioticValid && isEigenLayerValid
     )
@@ -149,6 +156,7 @@ function OptInForm() {
 
   const handleNextStep = () => {
     if (isCurrentStepValid()) {
+      console.log("nextStep")
       nextStep()
     }
   }
@@ -160,20 +168,21 @@ function OptInForm() {
 
   const validatorKeys = form.watch("validatorKeys") // Use watch to make validatorKeys reactive
   const protocol = form.watch("protocol")
-  const vaults = form.watch("vaults")
 
   useEffect(() => {
-    setProtocol(
-      {
-        vanilla: Protocol.Vanilla,
-        eigenlayer: Protocol.EigenLayer,
-        symbiotic: Protocol.Symbiotic,
-      }[protocol]
-    )
+    if (protocol) {
+      setProtocol(
+        {
+          vanilla: Protocol.Vanilla,
+          eigenlayer: Protocol.EigenLayer,
+          symbiotic: Protocol.Symbiotic,
+        }[protocol]
+      )
+    }
   }, [protocol])
 
   return (
-    <div className="mx-auto grid h-[450px] max-w-screen-xl grid-cols-2 gap-12 rounded-md border border-neutral-900 bg-neutral-950 p-12">
+    <div className="mx-auto grid h-[450px] max-w-screen-xl grid-cols-2 gap-12 rounded-md bg-black/90 p-12 shadow-md shadow-muted/10">
       <FormSteps
         className="w-11/12"
         form={{ ...form }}
@@ -184,6 +193,9 @@ function OptInForm() {
       <div className="flex w-full flex-col">
         <Form {...form}>
           <form className="mx-auto flex h-full w-full flex-col justify-between">
+            {currentStep === FormStep.Configure && (
+              <ConfigureField control={form.control} />
+            )}
             {currentStep === FormStep.SelectProtocol && (
               <ProtocolField control={form.control} />
             )}
@@ -223,12 +235,12 @@ function OptInForm() {
           </form>
         </Form>
         <div className="mt-4 flex justify-between">
-          {currentStep > FormStep.SelectProtocol && (
+          {currentStep > FormStep.Configure && (
             <Button
               variant="outline"
               type="button"
               onClick={handlePrevStep}
-              disabled={currentStep === FormStep.SelectProtocol}
+              disabled={currentStep === FormStep.Configure}
             >
               <ChevronLeft strokeWidth={1.5} className="h-5 w-5" />
               Back
