@@ -1,12 +1,15 @@
 import { Address, parseEther, WalletClient } from "viem"
 
+import { env } from "@/env.mjs"
+
 import { CHAIN } from "../constants"
 import { getPublicClient } from "../viem"
 import { vanillaRegistryAbi } from "./abi/vanilla-registry"
 
 export const VANILLA_REGISTRY_ADDRESS: Address = {
-  17000: "0x87d5f694fad0b6c8aabca96277de09451e277bcf" as Address,
-  31337: "0x87d5f694fad0b6c8aabca96277de09451e277bcf" as Address,
+  1: env.NEXT_PUBLIC_VANILLA_REGISTRY_ADDRESS as Address,
+  17000: env.NEXT_PUBLIC_VANILLA_REGISTRY_ADDRESS_HOLESKY as Address,
+  31337: env.NEXT_PUBLIC_VANILLA_REGISTRY_ADDRESS_ANVIL as Address,
 }[CHAIN.id]
 
 const client = getPublicClient()

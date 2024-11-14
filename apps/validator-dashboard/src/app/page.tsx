@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
+import { mainnet } from "viem/chains"
 
+import { CHAIN } from "@/lib/constants"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { ConnectWallet } from "@/components/connect-wallet"
@@ -46,7 +48,9 @@ export default function Home(): React.ReactElement {
                 className="mb-3 h-4 w-4 scale-0 transition-transform group-hover:scale-100"
               />
             </div>
-            <div className="text-sm text-muted-foreground">Holesky Testnet</div>
+            <div className="text-muted-foregroun text-sm capitalize">
+              {CHAIN.id === mainnet.id ? "Ethereum Mainnet" : "Holesky Testnet"}
+            </div>
           </div>
         </div>
         <div className="flex w-full flex-col items-center gap-6 ">

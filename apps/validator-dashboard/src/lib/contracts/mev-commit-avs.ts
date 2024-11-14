@@ -7,12 +7,14 @@ import {
   type WalletClient,
 } from "viem"
 
+import { env } from "@/env.mjs"
 import { CHAIN } from "@/lib/constants"
 import { getPublicClient } from "@/lib/viem"
 
 export const MEV_COMMIT_AVS_ADDRESS: Address = {
-  17000: "0xE8406159460BE1BB0439d54E02cc7A8dDB6b0fB9" as Address,
-  31337: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707" as Address,
+  1: env.NEXT_PUBLIC_MEV_COMMIT_AVS_V3_ADDRESS as Address,
+  17000: env.NEXT_PUBLIC_MEV_COMMIT_AVS_V3_ADDRESS_HOLESKY as Address,
+  31337: env.NEXT_PUBLIC_MEV_COMMIT_AVS_V3_ADDRESS_ANVIL as Address,
 }[CHAIN.id]
 
 export const abi = parseAbi([

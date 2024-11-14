@@ -1,11 +1,11 @@
-import { createConfig, http } from "wagmi"
+import { Config, createConfig, http } from "wagmi"
 
 import { CHAIN } from "./constants"
 
-export const config = createConfig({
+export const config: Config = createConfig({
   chains: [CHAIN],
-
   transports: {
-    [CHAIN.id]: http(),
+    1: http(),
+    17000: http(),
   },
 })
