@@ -9,7 +9,8 @@ export enum FormStep {
   ImportVaults = 3,
   ImportVaultKeys = 4,
   InputStake = 5,
-  Register = 6,
+  ViewKeys = 6,
+  Register = 7,
 }
 
 export enum Protocol {
@@ -23,12 +24,14 @@ const protocolSteps: { [key in Protocol]: FormStep[] } = {
     FormStep.Configure,
     FormStep.SelectProtocol,
     FormStep.ImportKeys,
+    FormStep.ViewKeys,
     FormStep.Register,
   ],
   [Protocol.Vanilla]: [
     FormStep.Configure,
     FormStep.SelectProtocol,
     FormStep.ImportKeys,
+    FormStep.ViewKeys,
     FormStep.InputStake,
     FormStep.Register,
   ],
@@ -37,6 +40,7 @@ const protocolSteps: { [key in Protocol]: FormStep[] } = {
     FormStep.SelectProtocol,
     FormStep.ImportVaults,
     FormStep.ImportVaultKeys,
+    FormStep.ViewKeys,
     FormStep.Register,
   ],
 }

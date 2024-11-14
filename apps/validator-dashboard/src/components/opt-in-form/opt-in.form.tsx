@@ -101,7 +101,16 @@ function OptInForm() {
   const { currentStep, nextStep, prevStep, setProtocol } = useFormStep()
 
   const { isPodOwner, isEigenPodOperator, isSymbioticOperator } = useAccount()
-
+  // export enum FormStep {
+  //   Configure = 0,
+  //   SelectProtocol = 1,
+  //   ImportKeys = 2,
+  //   ImportVaults = 3,
+  //   ImportVaultKeys = 4,
+  //   InputStake = 5,
+  //   ViewKeys = 6,
+  //   Register = 7,
+  // }
   const isCurrentStepValid = () => {
     const stepFields: Array<Array<keyof OptInFormData>> = [
       ["configured"], // FormStep.Configure
@@ -110,6 +119,7 @@ function OptInForm() {
       ["vaults"], // FormStep.ImportVaults
       ["validatorKeys"], // FormStep.ImportVaultKeys
       ["stakeAmount"], // FormStep.InputStake
+      ["validatorKeys"], // FormStep.ViewKeys
       ["validatorKeys"], // FormStep.Register
     ]
 
@@ -127,6 +137,12 @@ function OptInForm() {
     const protocol = form.watch("protocol")
     const validatorKeys = form.watch("validatorKeys")
     const vaults = form.watch("vaults")
+
+    const importKeysValid = !(
+      FormStep.ImportKeys === currentStep &&
+      (!validatorKeys[0] || validatorKeys[0].length === 0)
+    )
+
     const isSymbioticValid =
       (currentStep !== FormStep.ImportVaultKeys ||
         protocol !== "symbiotic" ||
@@ -139,14 +155,23 @@ function OptInForm() {
         (isPodOwner || isEigenPodOperator))
     console.log({
       stepValid:
-        isStepDirty && !isStepInvalid && isSymbioticValid && isEigenLayerValid,
-      isStepDirty,
+        isStepDirty &&
+        !isStepInvalid &&
+        isSymbioticValid &&
+        isEigenLayerValid &&
+        importKeysValid,
+      isStepDirty: isStepDirty,
       isStepInvalid: !isStepInvalid,
       isSymbioticValid: isSymbioticValid,
       isEigenLayerValid: isEigenLayerValid,
+      importKeysValid: importKeysValid,
     })
     return (
-      isStepDirty && !isStepInvalid && isSymbioticValid && isEigenLayerValid
+      isStepDirty &&
+      !isStepInvalid &&
+      isSymbioticValid &&
+      isEigenLayerValid &&
+      importKeysValid
     )
   }
 
@@ -162,12 +187,19 @@ function OptInForm() {
   }
 
   const handlePrevStep = () => {
+    if (currentStep === FormStep.ViewKeys) {
+      form.setValue("validatorKeys", [[]])
+    }
     clearError()
     prevStep()
   }
 
   const validatorKeys = form.watch("validatorKeys") // Use watch to make validatorKeys reactive
   const protocol = form.watch("protocol")
+
+  useEffect(() => {
+    console.log({ validatorKeys, protocol, error: form.formState.errors })
+  }, [validatorKeys, protocol, form.formState.errors])
 
   useEffect(() => {
     if (protocol) {
@@ -180,6 +212,18 @@ function OptInForm() {
       )
     }
   }, [protocol])
+
+  useEffect(() => {
+    // Check if validatorKeys is non-empty and valid
+    const isValidatorKeysValid =
+      validatorKeys[0] &&
+      validatorKeys[0].length > 0 &&
+      !form.getFieldState("validatorKeys").invalid
+
+    if (isValidatorKeysValid && currentStep === FormStep.ImportKeys) {
+      nextStep()
+    }
+  }, [validatorKeys, form]) // Re-run effect when validatorKeys or form changes
 
   return (
     <div className="mx-auto grid h-[450px] max-w-screen-xl grid-cols-2 gap-12 rounded-md bg-black/90 p-12 shadow-md shadow-muted/10">
@@ -199,20 +243,9 @@ function OptInForm() {
             {currentStep === FormStep.SelectProtocol && (
               <ProtocolField control={form.control} />
             )}
-            {currentStep === FormStep.ImportKeys &&
-              !(
-                validatorKeys?.[0]?.length && validatorKeys?.[0]?.length > 0
-              ) && (
-                <ValidatorKeysField control={form.control} />
-                // <>
-                //   {validatorKeys.length > 0 &&
-                //   !form.formState.errors.validatorKeys ? (
-                //     <ValidatorKeysList fileName="keys.txt" form={{ ...form }} />
-                //   ) : (
-                //     <ValidatorKeysField control={form.control} />
-                //   )}
-                // </>
-              )}
+            {currentStep === FormStep.ImportKeys && (
+              <ValidatorKeysField control={form.control} />
+            )}
             {currentStep === FormStep.InputStake && (
               <StakeAmountField control={form.control} />
             )}
@@ -222,16 +255,28 @@ function OptInForm() {
             {currentStep === FormStep.ImportVaultKeys && (
               <VaultKeysField form={form} />
             )}
-            {currentStep === FormStep.Register && protocol === "symbiotic" && (
-              <VaultKeysField form={form} />
+
+            {/* View Keys */}
+            {currentStep === FormStep.ViewKeys && protocol === "vanilla" && (
+              <ValidatorKeysList fileName="keys.txt" form={{ ...form }} />
             )}
-            {(currentStep === FormStep.Register && protocol !== "symbiotic") ||
-              (currentStep === FormStep.ImportKeys &&
-                protocol === "eigenlayer" &&
-                validatorKeys?.[0]?.length &&
-                validatorKeys?.[0]?.length > 0 && (
-                  <ValidatorKeysList fileName="keys.txt" form={{ ...form }} />
-                ))}
+            {currentStep === FormStep.ViewKeys && protocol === "eigenlayer" && (
+              <ValidatorKeysList fileName="keys.txt" form={{ ...form }} />
+            )}
+            {currentStep === FormStep.ViewKeys && protocol === "symbiotic" && (
+              <ValidatorKeysList fileName="keys.txt" form={{ ...form }} />
+            )}
+
+            {/* Register */}
+            {currentStep === FormStep.Register && protocol === "vanilla" && (
+              <ValidatorKeysList form={{ ...form }} />
+            )}
+            {currentStep === FormStep.Register && protocol === "eigenlayer" && (
+              <ValidatorKeysList form={{ ...form }} />
+            )}
+            {currentStep === FormStep.Register && protocol === "symbiotic" && (
+              <ValidatorKeysList form={{ ...form }} />
+            )}
           </form>
         </Form>
         <div className="mt-4 flex justify-between">

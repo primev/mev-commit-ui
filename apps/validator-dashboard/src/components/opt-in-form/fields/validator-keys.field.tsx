@@ -40,7 +40,7 @@ export function ValidatorKeysField({ control }: ValidatorKeysFieldProps) {
     try {
       const text = await navigator.clipboard.readText()
       const keys = processKeys(text)
-      field.onChange(keys)
+      field.onChange([keys])
     } catch (error) {
       console.error("Failed to read clipboard contents: ", error)
     }
@@ -53,7 +53,7 @@ export function ValidatorKeysField({ control }: ValidatorKeysFieldProps) {
       reader.onload = (e) => {
         const text = e.target?.result as string
         const keys = processKeys(text)
-        field.onChange(keys)
+        field.onChange([keys])
       }
       reader.readAsText(file)
       event.target.value = ""

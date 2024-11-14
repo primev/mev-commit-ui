@@ -16,12 +16,18 @@ export const getMevCommitMetrics = async (): Promise<{
       }
     }
   `)
-  const { data } = await client.query({ query: GET_MEV_COMMIT_METRICS })
+  const { data, error } = await client.query({ query: GET_MEV_COMMIT_METRICS })
+
+  if (error) {
+    console.error(error)
+  }
+
+  console.log(data)
 
   return {
-    totalStaked: BigInt(data.mevCommitValidators.totalStaked),
-    totalOptedIn: BigInt(data.mevCommitValidators.totalOptedIn),
-    totalRestaked: BigInt(data.mevCommitValidators.totalRestaked),
+    totalStaked: BigInt(data.mevCommitValidators?.totalStaked ?? 0),
+    totalOptedIn: BigInt(data.mevCommitValidators?.totalOptedIn ?? 0),
+    totalRestaked: BigInt(data.mevCommitValidators?.totalRestaked ?? 0),
   }
 }
 

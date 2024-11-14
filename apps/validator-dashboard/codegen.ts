@@ -1,7 +1,9 @@
 import { CodegenConfig } from "@graphql-codegen/cli"
+import dotenv from "dotenv"
 
-import { GRAPHQL_URL } from "@/lib/constants"
+dotenv.config()
 
+const GRAPHQL_URL = `https://api.goldsky.com/api/public/project_cm1jo0v0u5zrv01vghcrm1ka1/subgraphs/mev-commit-validators/${process.env.NEXT_PUBLIC_CHAIN}/gn`
 const config: CodegenConfig = {
   schema: GRAPHQL_URL,
 

@@ -29,6 +29,346 @@ export type Scalars = {
   Timestamp: { input: any; output: any; }
 };
 
+export type Account = {
+  __typename?: 'Account';
+  address: Scalars['Bytes']['output'];
+  created: Scalars['BigInt']['output'];
+  eigenLayerStats: AccountEigenLayerStats;
+  id: Scalars['ID']['output'];
+  symbioticStats: AccountSymbioticStats;
+  vanillaStats: AccountVanillaStats;
+};
+
+export type AccountEigenLayerStats = {
+  __typename?: 'AccountEigenLayerStats';
+  account: Account;
+  deregistered: Scalars['BigInt']['output'];
+  deregistrationRequested: Scalars['BigInt']['output'];
+  id: Scalars['ID']['output'];
+  registered: Scalars['BigInt']['output'];
+  total: Scalars['BigInt']['output'];
+};
+
+export type AccountEigenLayerStats_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  account?: InputMaybe<Scalars['String']['input']>;
+  account_?: InputMaybe<Account_Filter>;
+  account_contains?: InputMaybe<Scalars['String']['input']>;
+  account_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_ends_with?: InputMaybe<Scalars['String']['input']>;
+  account_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_gt?: InputMaybe<Scalars['String']['input']>;
+  account_gte?: InputMaybe<Scalars['String']['input']>;
+  account_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  account_lt?: InputMaybe<Scalars['String']['input']>;
+  account_lte?: InputMaybe<Scalars['String']['input']>;
+  account_not?: InputMaybe<Scalars['String']['input']>;
+  account_not_contains?: InputMaybe<Scalars['String']['input']>;
+  account_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  account_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  account_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  account_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_starts_with?: InputMaybe<Scalars['String']['input']>;
+  account_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  and?: InputMaybe<Array<InputMaybe<AccountEigenLayerStats_Filter>>>;
+  deregistered?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  deregistered_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_not?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  deregistrationRequested?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  deregistrationRequested_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_not?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  id_gt?: InputMaybe<Scalars['ID']['input']>;
+  id_gte?: InputMaybe<Scalars['ID']['input']>;
+  id_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  id_lt?: InputMaybe<Scalars['ID']['input']>;
+  id_lte?: InputMaybe<Scalars['ID']['input']>;
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<AccountEigenLayerStats_Filter>>>;
+  registered?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  registered_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_not?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  total?: InputMaybe<Scalars['BigInt']['input']>;
+  total_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  total_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  total_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  total_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  total_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  total_not?: InputMaybe<Scalars['BigInt']['input']>;
+  total_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+};
+
+export enum AccountEigenLayerStats_OrderBy {
+  Account = 'account',
+  AccountAddress = 'account__address',
+  AccountCreated = 'account__created',
+  AccountId = 'account__id',
+  Deregistered = 'deregistered',
+  DeregistrationRequested = 'deregistrationRequested',
+  Id = 'id',
+  Registered = 'registered',
+  Total = 'total'
+}
+
+export type AccountSymbioticStats = {
+  __typename?: 'AccountSymbioticStats';
+  account: Account;
+  deregistered: Scalars['BigInt']['output'];
+  deregistrationRequested: Scalars['BigInt']['output'];
+  id: Scalars['ID']['output'];
+  registered: Scalars['BigInt']['output'];
+  total: Scalars['BigInt']['output'];
+};
+
+export type AccountSymbioticStats_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  account?: InputMaybe<Scalars['String']['input']>;
+  account_?: InputMaybe<Account_Filter>;
+  account_contains?: InputMaybe<Scalars['String']['input']>;
+  account_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_ends_with?: InputMaybe<Scalars['String']['input']>;
+  account_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_gt?: InputMaybe<Scalars['String']['input']>;
+  account_gte?: InputMaybe<Scalars['String']['input']>;
+  account_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  account_lt?: InputMaybe<Scalars['String']['input']>;
+  account_lte?: InputMaybe<Scalars['String']['input']>;
+  account_not?: InputMaybe<Scalars['String']['input']>;
+  account_not_contains?: InputMaybe<Scalars['String']['input']>;
+  account_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  account_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  account_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  account_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_starts_with?: InputMaybe<Scalars['String']['input']>;
+  account_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  and?: InputMaybe<Array<InputMaybe<AccountSymbioticStats_Filter>>>;
+  deregistered?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  deregistered_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_not?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistered_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  deregistrationRequested?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  deregistrationRequested_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_not?: InputMaybe<Scalars['BigInt']['input']>;
+  deregistrationRequested_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  id_gt?: InputMaybe<Scalars['ID']['input']>;
+  id_gte?: InputMaybe<Scalars['ID']['input']>;
+  id_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  id_lt?: InputMaybe<Scalars['ID']['input']>;
+  id_lte?: InputMaybe<Scalars['ID']['input']>;
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<AccountSymbioticStats_Filter>>>;
+  registered?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  registered_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_not?: InputMaybe<Scalars['BigInt']['input']>;
+  registered_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  total?: InputMaybe<Scalars['BigInt']['input']>;
+  total_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  total_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  total_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  total_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  total_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  total_not?: InputMaybe<Scalars['BigInt']['input']>;
+  total_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+};
+
+export enum AccountSymbioticStats_OrderBy {
+  Account = 'account',
+  AccountAddress = 'account__address',
+  AccountCreated = 'account__created',
+  AccountId = 'account__id',
+  Deregistered = 'deregistered',
+  DeregistrationRequested = 'deregistrationRequested',
+  Id = 'id',
+  Registered = 'registered',
+  Total = 'total'
+}
+
+export type AccountVanillaStats = {
+  __typename?: 'AccountVanillaStats';
+  account: Account;
+  id: Scalars['ID']['output'];
+  staked: Scalars['BigInt']['output'];
+  total: Scalars['BigInt']['output'];
+  unstaked: Scalars['BigInt']['output'];
+  withdrawn: Scalars['BigInt']['output'];
+};
+
+export type AccountVanillaStats_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  account?: InputMaybe<Scalars['String']['input']>;
+  account_?: InputMaybe<Account_Filter>;
+  account_contains?: InputMaybe<Scalars['String']['input']>;
+  account_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_ends_with?: InputMaybe<Scalars['String']['input']>;
+  account_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_gt?: InputMaybe<Scalars['String']['input']>;
+  account_gte?: InputMaybe<Scalars['String']['input']>;
+  account_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  account_lt?: InputMaybe<Scalars['String']['input']>;
+  account_lte?: InputMaybe<Scalars['String']['input']>;
+  account_not?: InputMaybe<Scalars['String']['input']>;
+  account_not_contains?: InputMaybe<Scalars['String']['input']>;
+  account_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  account_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  account_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  account_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  account_starts_with?: InputMaybe<Scalars['String']['input']>;
+  account_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  and?: InputMaybe<Array<InputMaybe<AccountVanillaStats_Filter>>>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  id_gt?: InputMaybe<Scalars['ID']['input']>;
+  id_gte?: InputMaybe<Scalars['ID']['input']>;
+  id_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  id_lt?: InputMaybe<Scalars['ID']['input']>;
+  id_lte?: InputMaybe<Scalars['ID']['input']>;
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<AccountVanillaStats_Filter>>>;
+  staked?: InputMaybe<Scalars['BigInt']['input']>;
+  staked_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  staked_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  staked_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  staked_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  staked_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  staked_not?: InputMaybe<Scalars['BigInt']['input']>;
+  staked_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  total?: InputMaybe<Scalars['BigInt']['input']>;
+  total_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  total_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  total_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  total_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  total_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  total_not?: InputMaybe<Scalars['BigInt']['input']>;
+  total_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  unstaked?: InputMaybe<Scalars['BigInt']['input']>;
+  unstaked_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  unstaked_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  unstaked_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  unstaked_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  unstaked_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  unstaked_not?: InputMaybe<Scalars['BigInt']['input']>;
+  unstaked_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  withdrawn?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawn_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawn_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawn_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  withdrawn_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawn_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawn_not?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawn_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+};
+
+export enum AccountVanillaStats_OrderBy {
+  Account = 'account',
+  AccountAddress = 'account__address',
+  AccountCreated = 'account__created',
+  AccountId = 'account__id',
+  Id = 'id',
+  Staked = 'staked',
+  Total = 'total',
+  Unstaked = 'unstaked',
+  Withdrawn = 'withdrawn'
+}
+
+export type Account_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  address?: InputMaybe<Scalars['Bytes']['input']>;
+  address_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  address_gt?: InputMaybe<Scalars['Bytes']['input']>;
+  address_gte?: InputMaybe<Scalars['Bytes']['input']>;
+  address_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  address_lt?: InputMaybe<Scalars['Bytes']['input']>;
+  address_lte?: InputMaybe<Scalars['Bytes']['input']>;
+  address_not?: InputMaybe<Scalars['Bytes']['input']>;
+  address_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  address_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  and?: InputMaybe<Array<InputMaybe<Account_Filter>>>;
+  created?: InputMaybe<Scalars['BigInt']['input']>;
+  created_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  created_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  created_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  created_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  created_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  created_not?: InputMaybe<Scalars['BigInt']['input']>;
+  created_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  eigenLayerStats_?: InputMaybe<AccountEigenLayerStats_Filter>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  id_gt?: InputMaybe<Scalars['ID']['input']>;
+  id_gte?: InputMaybe<Scalars['ID']['input']>;
+  id_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  id_lt?: InputMaybe<Scalars['ID']['input']>;
+  id_lte?: InputMaybe<Scalars['ID']['input']>;
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<Account_Filter>>>;
+  symbioticStats_?: InputMaybe<AccountSymbioticStats_Filter>;
+  vanillaStats_?: InputMaybe<AccountVanillaStats_Filter>;
+};
+
+export enum Account_OrderBy {
+  Address = 'address',
+  Created = 'created',
+  EigenLayerStats = 'eigenLayerStats',
+  EigenLayerStatsDeregistered = 'eigenLayerStats__deregistered',
+  EigenLayerStatsDeregistrationRequested = 'eigenLayerStats__deregistrationRequested',
+  EigenLayerStatsId = 'eigenLayerStats__id',
+  EigenLayerStatsRegistered = 'eigenLayerStats__registered',
+  EigenLayerStatsTotal = 'eigenLayerStats__total',
+  Id = 'id',
+  SymbioticStats = 'symbioticStats',
+  SymbioticStatsDeregistered = 'symbioticStats__deregistered',
+  SymbioticStatsDeregistrationRequested = 'symbioticStats__deregistrationRequested',
+  SymbioticStatsId = 'symbioticStats__id',
+  SymbioticStatsRegistered = 'symbioticStats__registered',
+  SymbioticStatsTotal = 'symbioticStats__total',
+  VanillaStats = 'vanillaStats',
+  VanillaStatsId = 'vanillaStats__id',
+  VanillaStatsStaked = 'vanillaStats__staked',
+  VanillaStatsTotal = 'vanillaStats__total',
+  VanillaStatsUnstaked = 'vanillaStats__unstaked',
+  VanillaStatsWithdrawn = 'vanillaStats__withdrawn'
+}
+
 export enum Aggregation_Interval {
   Day = 'day',
   Hour = 'hour'
@@ -478,6 +818,14 @@ export type Query = {
   __typename?: 'Query';
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
+  account?: Maybe<Account>;
+  accountEigenLayerStats?: Maybe<AccountEigenLayerStats>;
+  accountEigenLayerStats_collection: Array<AccountEigenLayerStats>;
+  accountSymbioticStats?: Maybe<AccountSymbioticStats>;
+  accountSymbioticStats_collection: Array<AccountSymbioticStats>;
+  accountVanillaStats?: Maybe<AccountVanillaStats>;
+  accountVanillaStats_collection: Array<AccountVanillaStats>;
+  accounts: Array<Account>;
   eigenPod?: Maybe<EigenPod>;
   eigenPods: Array<EigenPod>;
   mevCommitValidators?: Maybe<MevCommitValidators>;
@@ -511,6 +859,78 @@ export type Query = {
 
 export type Query_MetaArgs = {
   block?: InputMaybe<Block_Height>;
+};
+
+
+export type QueryAccountArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryAccountEigenLayerStatsArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryAccountEigenLayerStats_CollectionArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<AccountEigenLayerStats_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<AccountEigenLayerStats_Filter>;
+};
+
+
+export type QueryAccountSymbioticStatsArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryAccountSymbioticStats_CollectionArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<AccountSymbioticStats_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<AccountSymbioticStats_Filter>;
+};
+
+
+export type QueryAccountVanillaStatsArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryAccountVanillaStats_CollectionArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<AccountVanillaStats_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<AccountVanillaStats_Filter>;
+};
+
+
+export type QueryAccountsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Account_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Account_Filter>;
 };
 
 
@@ -1079,6 +1499,14 @@ export type Subscription = {
   __typename?: 'Subscription';
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
+  account?: Maybe<Account>;
+  accountEigenLayerStats?: Maybe<AccountEigenLayerStats>;
+  accountEigenLayerStats_collection: Array<AccountEigenLayerStats>;
+  accountSymbioticStats?: Maybe<AccountSymbioticStats>;
+  accountSymbioticStats_collection: Array<AccountSymbioticStats>;
+  accountVanillaStats?: Maybe<AccountVanillaStats>;
+  accountVanillaStats_collection: Array<AccountVanillaStats>;
+  accounts: Array<Account>;
   eigenPod?: Maybe<EigenPod>;
   eigenPods: Array<EigenPod>;
   mevCommitValidators?: Maybe<MevCommitValidators>;
@@ -1112,6 +1540,78 @@ export type Subscription = {
 
 export type Subscription_MetaArgs = {
   block?: InputMaybe<Block_Height>;
+};
+
+
+export type SubscriptionAccountArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionAccountEigenLayerStatsArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionAccountEigenLayerStats_CollectionArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<AccountEigenLayerStats_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<AccountEigenLayerStats_Filter>;
+};
+
+
+export type SubscriptionAccountSymbioticStatsArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionAccountSymbioticStats_CollectionArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<AccountSymbioticStats_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<AccountSymbioticStats_Filter>;
+};
+
+
+export type SubscriptionAccountVanillaStatsArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionAccountVanillaStats_CollectionArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<AccountVanillaStats_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<AccountVanillaStats_Filter>;
+};
+
+
+export type SubscriptionAccountsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Account_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Account_Filter>;
 };
 
 
@@ -1806,7 +2306,7 @@ export type GetStakerQueryVariables = Exact<{
 }>;
 
 
-export type GetStakerQuery = { __typename?: 'Query', staker?: { __typename?: 'Staker', id: string, created: any, validators: Array<{ __typename?: 'StakerValidator', id: string, validatorBLSKey: string, stakeAmount: any, stakedAt: any, status: StakerStatus }> } | null };
+export type GetStakerQuery = { __typename?: 'Query', account?: { __typename?: 'Account', vanillaStats: { __typename?: 'AccountVanillaStats', total: any } } | null, staker?: { __typename?: 'Staker', id: string, created: any, validators: Array<{ __typename?: 'StakerValidator', id: string, validatorBLSKey: string, stakeAmount: any, stakedAt: any, status: StakerStatus }> } | null };
 
 export type GetStakerNonPaginatedQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1844,7 +2344,7 @@ export const GetDelegatedEigenPodsNonPaginatedDocument = {"kind":"Document","def
 export const GetEigenPodsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetEigenPods"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"EigenPod_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"restaker"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"eigenPods"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"podOwner"}},{"kind":"Field","name":{"kind":"Name","value":"podContractAddress"}},{"kind":"Field","name":{"kind":"Name","value":"restaker"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"validators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"validatorBLSKey"}},{"kind":"Field","name":{"kind":"Name","value":"stakeAmount"}},{"kind":"Field","name":{"kind":"Name","value":"stakedAt"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetEigenPodsQuery, GetEigenPodsQueryVariables>;
 export const GetEigenPodsNonPaginatedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetEigenPodsNonPaginated"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"restaker"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"eigenPods"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"podOwner"}},{"kind":"Field","name":{"kind":"Name","value":"podContractAddress"}},{"kind":"Field","name":{"kind":"Name","value":"restaker"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"validators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"validatorBLSKey"}},{"kind":"Field","name":{"kind":"Name","value":"stakeAmount"}},{"kind":"Field","name":{"kind":"Name","value":"stakedAt"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetEigenPodsNonPaginatedQuery, GetEigenPodsNonPaginatedQueryVariables>;
 export const GetVaultsByOperatorAndNetworkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetVaultsByOperatorAndNetwork"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"operatorNetworkId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"operatorNetwork"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"operatorNetworkId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"operator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"vaults"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vault"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"vaultAddress"}},{"kind":"Field","name":{"kind":"Name","value":"created"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetVaultsByOperatorAndNetworkQuery, GetVaultsByOperatorAndNetworkQueryVariables>;
-export const GetStakerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetStaker"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"StakerValidator_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"staker"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"validators"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"validatorBLSKey"}},{"kind":"Field","name":{"kind":"Name","value":"stakeAmount"}},{"kind":"Field","name":{"kind":"Name","value":"stakedAt"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetStakerQuery, GetStakerQueryVariables>;
+export const GetStakerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetStaker"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"StakerValidator_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"account"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vanillaStats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"staker"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"validators"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"validatorBLSKey"}},{"kind":"Field","name":{"kind":"Name","value":"stakeAmount"}},{"kind":"Field","name":{"kind":"Name","value":"stakedAt"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetStakerQuery, GetStakerQueryVariables>;
 export const GetStakerNonPaginatedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetStakerNonPaginated"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"staker"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"validators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"validatorBLSKey"}},{"kind":"Field","name":{"kind":"Name","value":"stakeAmount"}},{"kind":"Field","name":{"kind":"Name","value":"stakedAt"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetStakerNonPaginatedQuery, GetStakerNonPaginatedQueryVariables>;
 export const GetAllSymbioticOperatorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllSymbioticOperator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"operatorId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"SymbioticValidator_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"symbioticOperator"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"operatorId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"operatorAddress"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"validators"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"validatorBLSKey"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"vault"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vaultAddress"}}]}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllSymbioticOperatorQuery, GetAllSymbioticOperatorQueryVariables>;
 export const GetSymbioticOperatorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSymbioticOperator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"operatorId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"symbioticOperator"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"operatorId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"operatorAddress"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"validators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"validatorBLSKey"}},{"kind":"Field","name":{"kind":"Name","value":"created"}},{"kind":"Field","name":{"kind":"Name","value":"vault"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vaultAddress"}}]}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetSymbioticOperatorQuery, GetSymbioticOperatorQueryVariables>;

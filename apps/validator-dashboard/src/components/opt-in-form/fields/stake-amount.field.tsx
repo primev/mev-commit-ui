@@ -24,7 +24,7 @@ export function StakeAmountField({
       control={control}
       name="stakeAmount"
       render={({ field }) => (
-        <FormItem className="flex h-full flex-col items-center">
+        <FormItem className="flex h-full w-full flex-col items-center">
           <FormLabel
             htmlFor="stakeAmount"
             className="text-left text-xl font-semibold tracking-tight"

@@ -3,7 +3,6 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   OnChangeFn,
   PaginationState,
@@ -57,13 +56,13 @@ export function PaginatedTable<TData, TValue>({
     onSortingChange: setSorting,
     onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualPagination: true,
+    manualSorting: true,
   })
 
   if (error) {
-    return <p></p>
+    return <p>Error: {error.message}</p>
   }
 
   return (
@@ -88,7 +87,7 @@ export function PaginatedTable<TData, TValue>({
         <TableBody>
           {loading ? (
             // Render skeleton rows when loading
-            Array.from({ length: 3 }).map((_, index) => (
+            Array.from({ length: pagination.pageSize }).map((_, index) => (
               <TableRow key={index}>
                 {columns.map((column, columnIndex) => (
                   <TableCell
@@ -101,11 +100,8 @@ export function PaginatedTable<TData, TValue>({
               </TableRow>
             ))
           ) : table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row, index) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
+            table.getRowModel().rows.map((row) => (
+              <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} className="pl-5">
                     {

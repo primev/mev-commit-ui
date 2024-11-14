@@ -16,15 +16,15 @@ export function ValidatorKeysList({
   form,
   fileName,
 }: ValidatorKeysListProps): React.ReactElement {
-  const validatorKeys = form.getValues("validatorKeys") ?? []
+  const validatorKeys = form.getValues("validatorKeys")[0] ?? []
   return (
     <div className="mx-auto w-full">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center">
-          <div className="flex items-center rounded bg-muted/70 px-3 py-2 text-sm font-semibold">
+          {/* <div className="flex items-center rounded bg-muted/70 px-3 py-2 text-sm font-semibold">
             <FileText className="mr-2 h-4 w-4 text-muted-foreground" />
             {fileName && <span>{fileName}</span>}
-          </div>
+          </div> */}
           <Button
             variant="secondary"
             onClick={() => form.setValue("validatorKeys", [])}
@@ -36,7 +36,7 @@ export function ValidatorKeysList({
           </Button>
         </div>
         <span className="text-xs text-muted-foreground">
-          {form.getValues("validatorKeys")[0]?.length} keys
+          {validatorKeys.length} keys
         </span>
       </div>
       <ScrollArea className="h-[200px] w-full rounded-md border border-muted/40 bg-muted/30 p-3">
@@ -47,7 +47,7 @@ export function ValidatorKeysList({
               className="mx-auto w-min rounded-md bg-muted/70 p-2 shadow-sm shadow-muted"
             >
               <code className="font-mono text-sm ">
-                {truncateKey(key[0] ?? "")}
+                {truncateKey(key ?? "")}
               </code>
             </div>
           ))}

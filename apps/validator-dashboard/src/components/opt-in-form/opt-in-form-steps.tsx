@@ -185,6 +185,15 @@ const ImportVaultKeysBody = ({
   </Alert>
 )
 
+const InputStakeBody = ({ form }: { form: UseFormReturn<OptInFormData> }) => (
+  <Alert className="w-10/12">
+    <Info className="h-4 w-4" />
+    <AlertDescription className="text-xs text-muted-foreground">
+      Enter the amount you want to stake.
+    </AlertDescription>
+  </Alert>
+)
+
 const steps: Record<
   FormStep,
   {
@@ -197,7 +206,7 @@ const steps: Record<
       | "vaults"
     label: string
     description: string
-    body?: (form: UseFormReturn<OptInFormData>) => ReactNode // Function to return a ReactNode
+    body?: (form: UseFormReturn<OptInFormData>) => ReactNode
   }
 > = {
   [FormStep.Configure]: {
@@ -251,12 +260,19 @@ const steps: Record<
     value: "stakeAmount",
     label: "Stake Amount",
     description: "Enter the amount you want to stake.",
+    body: (form) => <InputStakeBody form={form} />,
   },
   [FormStep.Register]: {
     value: "register",
     label: "Register",
     description: "Register your validator keys.",
     body: (form) => <RegisterBody form={form} />,
+  },
+  [FormStep.ViewKeys]: {
+    value: "validatorKeys",
+    label: "View Validator Keys",
+    description: "Review your validator keys before registration.",
+    body: (form) => <ValidatorKeysBody form={form} />,
   },
 }
 

@@ -21,7 +21,6 @@ export function useAllValidatorsPaginated(
     validators: stakerValidators,
     loading: stakerLoading,
     error: stakerError,
-    handlePaginationChange: handleStakerPaginationChange,
   } = useStakerValidatorsPaginated(pagination, sorting)
 
   const {
@@ -74,7 +73,6 @@ export function useAllValidatorsPaginated(
 
   // Combined handlePaginationChange function
   const handlePaginationChange = (newPagination: PaginationState) => {
-    handleStakerPaginationChange(newPagination)
     handleSymbioticPaginationChange(newPagination)
     handleEigenPodsPaginationChange(newPagination)
     handleDelegatedPodsPaginationChange(newPagination)
