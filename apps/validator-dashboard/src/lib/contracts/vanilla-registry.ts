@@ -1,16 +1,9 @@
 import { Address, parseEther, WalletClient } from "viem"
 
-import { env } from "@/env.mjs"
+import { mevCommitConfig } from "@/config/mev-commit"
 
-import { CHAIN } from "../constants"
 import { getPublicClient } from "../viem"
 import { vanillaRegistryAbi } from "./abi/vanilla-registry"
-
-export const VANILLA_REGISTRY_ADDRESS: Address = {
-  1: env.NEXT_PUBLIC_VANILLA_REGISTRY_ADDRESS as Address,
-  17000: env.NEXT_PUBLIC_VANILLA_REGISTRY_ADDRESS_HOLESKY as Address,
-  31337: env.NEXT_PUBLIC_VANILLA_REGISTRY_ADDRESS_ANVIL as Address,
-}[CHAIN.id]
 
 const client = getPublicClient()
 
@@ -26,7 +19,7 @@ export const stakeValidators = async ({
   stakeAmount: string
 }) => {
   const { request } = await client.simulateContract({
-    address: VANILLA_REGISTRY_ADDRESS,
+    address: mevCommitConfig.vanillaRegistryAddress,
     abi: vanillaRegistryAbi,
     functionName: "stake",
     args: [blsPubkeys],

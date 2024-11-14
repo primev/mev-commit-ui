@@ -12,3 +12,10 @@ export type SiteConfig = {
   }
   ogImage: string
 }
+
+export type MevCommitConfig = {
+  chain: "mainnet" | "holesky" | "anvil"
+  vanillaRegistryAddress: Address
+  middlewareAddress: Address
+  avsV3Address: Address
+}
