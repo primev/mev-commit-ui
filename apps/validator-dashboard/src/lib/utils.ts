@@ -1,6 +1,8 @@
+import { headers } from "next/headers"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { BaseError, ContractFunctionRevertedError } from "viem"
+import { holesky, mainnet } from "viem/chains"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -65,4 +67,21 @@ export function timeAgo(seconds: number): string {
   }
 
   return "just now"
+}
+
+export function getChain(): "holesky" | "mainnet" {
+  if (typeof window !== "undefined") {
+    // Client-side
+    return window.location.hostname.includes("holesky") ? "holesky" : "mainnet"
+  } else {
+    // Server-side
+    try {
+      const headersList = headers()
+      const host = headersList.get("host") || ""
+      return host.includes("holesky") ? "holesky" : "mainnet"
+    } catch {
+      // Headers not available (e.g., during static generation)
+      return "mainnet" // Default to mainnet or use an environment variable
+    }
+  }
 }
