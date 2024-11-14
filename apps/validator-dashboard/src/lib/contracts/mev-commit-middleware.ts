@@ -1,22 +1,9 @@
-import { Address, parseAbi, WalletClient } from "viem"
+import { Address, WalletClient } from "viem"
 
-import { env } from "@/env.mjs"
+import { mevCommitConfig } from "@/config/mev-commit"
 
-import { CHAIN } from "../constants"
 import { getPublicClient } from "../viem"
 import { mevCommitMiddlewareAbi } from "./abi/mev-commit-middleware"
-
-export const MEV_COMMIT_MIDDLEWARE_ADDRESS: Address = {
-  1: env.NEXT_PUBLIC_MEV_COMMIT_MIDDLEWARE_ADDRESS as Address,
-  17000: env.NEXT_PUBLIC_MEV_COMMIT_MIDDLEWARE_ADDRESS_HOLESKY as Address,
-  31337: env.NEXT_PUBLIC_MEV_COMMIT_MIDDLEWARE_ADDRESS_ANVIL as Address,
-}[CHAIN.id]
-
-export const abi = parseAbi([
-  "function registerValidators(bytes[][] calldata blsPubkeys, address[] calldata vaults) external",
-  "function requestValDeregistrations(bytes[] calldata blsPubkeys) external",
-  "function deregisterValidators(bytes[] calldata blsPubkeys) external",
-])
 
 const client = getPublicClient()
 
@@ -32,7 +19,7 @@ export const registerValidators = async ({
   account: Address
 }) => {
   const { request } = await client.simulateContract({
-    address: MEV_COMMIT_MIDDLEWARE_ADDRESS,
+    address: mevCommitConfig.middlewareAddress,
     abi: mevCommitMiddlewareAbi,
     functionName: "registerValidators",
     account,
