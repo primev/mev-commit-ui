@@ -68,20 +68,3 @@ export function timeAgo(seconds: number): string {
 
   return "just now"
 }
-
-export function getChain(): "holesky" | "mainnet" {
-  if (typeof window !== "undefined") {
-    // Client-side
-    return window.location.hostname.includes("holesky") ? "holesky" : "mainnet"
-  } else {
-    // Server-side
-    try {
-      const headersList = headers()
-      const host = headersList.get("host") || ""
-      return host.includes("holesky") ? "holesky" : "mainnet"
-    } catch {
-      // Headers not available (e.g., during static generation)
-      return "mainnet" // Default to mainnet or use an environment variable
-    }
-  }
-}

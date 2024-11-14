@@ -3,6 +3,7 @@ import { z } from "zod"
 
 export const env = createEnv({
   client: {
+    NEXT_PUBLIC_CHAIN: z.enum(["holesky", "mainnet"]),
     NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL: z.string().min(1).optional(),
     NEXT_PUBLIC_APP_URL: z.string().min(1).optional(),
     NEXT_PUBLIC_VANILLA_REGISTRY_ADDRESS: z.string().min(1),
@@ -10,6 +11,7 @@ export const env = createEnv({
     NEXT_PUBLIC_MEV_COMMIT_MIDDLEWARE_ADDRESS: z.string().min(1),
   },
   runtimeEnv: {
+    NEXT_PUBLIC_CHAIN: process.env.NEXT_PUBLIC_CHAIN,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL:
       process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL,
